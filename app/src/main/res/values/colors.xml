@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--公共-->
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="title_line">#BFBFBF</color>
+    <color name="mainColor">#31B7C1</color>
+    <color name="main_bg">#F6F6F6</color>
+
+
 </resources>
