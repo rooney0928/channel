@@ -1,13 +1,23 @@
 package com.qunadai.channel.http;
 
 
+import com.qunadai.channel.bean.LoginBean;
+import com.qunadai.channel.bean.base.BaseBean;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
+import rx.Observable;
+
 /**
  * Created by wayne on 2017/5/10.
  */
 
-public interface QndApi {
+public interface ChannelApi {
 
-
+    @GET("home/users/signin")
+    Observable<BaseBean<LoginBean>> login(@Header("Authorization") String auth);
 
     /**
      * 获取登录短信验证码
@@ -32,13 +42,8 @@ public interface QndApi {
 //                                @Query("newsha1password") String pwd);
 
 
-
-
-
-
 //    @PUT("home/creditinfo")
 //    Observable<PersonInfo> setPersonInfo(@Query("access_token") String access_token, @Body RequestBody body);
-
 
 
 }

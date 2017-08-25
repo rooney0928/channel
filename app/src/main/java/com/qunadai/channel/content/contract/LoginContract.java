@@ -13,22 +13,22 @@ import com.qunadai.channel.content.base.BaseView;
 
 public interface LoginContract {
     interface View extends BaseView {
-        void getLoginSms(String msg);
-        void getLoginSmsFail(String error);
+//        void getLoginSms(String msg);
+//        void getLoginSmsFail(String error);
 
-        void loginDone(BaseBean<LoginBean> token);
+        void loginDone(BaseBean<LoginBean> bean);
         void loginFail(String error);
     }
 
     interface Presenter extends BasePresenter {
-        void requestLoginSms(String phone);
-        void loginByPwd(String phone, String pwd);
-        void loginBySms(String phone, String sms);
+//        void requestLoginSms(String phone);
+        void loginByPwd(String auth);
+//        void loginBySms(String phone, String sms);
     }
 
     interface Model extends BaseModel {
-        void requestLoginSms(String phone);
-        void loginByPwd(String phone, String pwd);
-        void loginBySms(String phone, String sms);
+//        void requestLoginSms(String phone);
+        void loginByPwd(String auth);
+//        void loginBySms(String phone, String sms);
     }
 }

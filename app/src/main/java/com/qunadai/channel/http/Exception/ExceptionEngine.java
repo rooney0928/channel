@@ -39,8 +39,6 @@ public class ExceptionEngine {
             ex = new ApiException(e, ERROR.HTTP_ERROR);
             switch (httpException.code()) {
                 case PARAM_ERROR:
-                case UNAUTHORIZED:
-
                     try {
                         String errorJson = httpException.response().errorBody().string();
                         JSONObject obj = new JSONObject(errorJson);
@@ -55,6 +53,10 @@ public class ExceptionEngine {
 //                        e1.printStackTrace();
                         ex.setDisplayMessage("错误" + httpException.code() + ":json解析错误");
                     }
+                case UNAUTHORIZED:
+
+                    ex.setDisplayMessage("错误" + httpException.code() + ":用户身份出错");
+
                     break;
                 case INTERNAL_SERVER_ERROR:
 

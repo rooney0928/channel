@@ -17,7 +17,7 @@ public abstract class MyCallBack<T> extends Subscriber<T>{
 
     @Override
     public void onCompleted() {
-
+        requestEnd();
     }
 
     @Override

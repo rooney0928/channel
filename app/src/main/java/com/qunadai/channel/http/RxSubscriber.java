@@ -1,6 +1,7 @@
 package com.qunadai.channel.http;
 
-import com.app.qunadai.http.Exception.ExceptionEngine;
+
+import com.qunadai.channel.http.Exception.ExceptionEngine;
 
 import rx.Subscriber;
 
@@ -19,7 +20,7 @@ public abstract class RxSubscriber<T> extends Subscriber<T>{
     @Override
     public void onError(Throwable e) {
 
-        ApiException ae =ExceptionEngine.handleException(e);
+        ApiException ae = ExceptionEngine.handleException(e);
 //        if(e instanceof ApiException){
             onError(ae);
 //        }else{
