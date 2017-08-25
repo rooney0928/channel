@@ -3,7 +3,7 @@ package com.qunadai.channel.http;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qunadai.channel.ChannelFactory;
-import com.qunadai.channel.bean.LoginBean;
+import com.qunadai.channel.bean.User;
 import com.qunadai.channel.bean.base.BaseBean;
 
 import java.util.concurrent.TimeUnit;
@@ -22,7 +22,7 @@ import rx.schedulers.Schedulers;
 
 public class RxHttp {
 
-//    public static final String ROOT = "https://fxt.qunadai.com/";
+    //    public static final String ROOT = "https://fxt.qunadai.com/";
     public static final String ROOT = "https://fxtbackend.qunadai.com/";
 //    public static final String ROOT = "https://mapit.qunadai.com/";
 //    public static final String ROOT = "http://192.168.13.132:8080/";
@@ -69,8 +69,18 @@ public class RxHttp {
     }
 
     //登录
-    public static Observable<BaseBean<LoginBean>> login(String auth) {
+    public static Observable<BaseBean<User>> login(String auth) {
         return qndApi.login("Basic " + auth);
+    }
+
+    //注册短信
+    public static Observable<BaseBean<User>> signUpSms(String phone) {
+        return qndApi.signUpSms(phone);
+    }
+
+    //注册
+    public static Observable<BaseBean<User>> signUp(String phone, String sms, String pwd) {
+        return qndApi.signUp(phone, sms, pwd);
     }
 
 

@@ -1,5 +1,6 @@
 package com.qunadai.channel.content.ui.user;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 
 
 import com.qunadai.channel.R;
-import com.qunadai.channel.bean.LoginBean;
+import com.qunadai.channel.bean.User;
 import com.qunadai.channel.bean.base.BaseBean;
 import com.qunadai.channel.content.base.BaseActivity;
 import com.qunadai.channel.content.contract.LoginContract;
@@ -310,8 +311,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             @Override
             public void onClick(View v) {
                 //进入注册环节
-//                Intent intentRegister = new Intent(LoginActivity.this, RegisterActivity.class);
-//                startActivity(intentRegister);
+                Intent intentRegister = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intentRegister);
             }
         });
         tv_forget_password.setOnClickListener(new View.OnClickListener() {
@@ -482,7 +483,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     @Override
-    public void loginDone(BaseBean<LoginBean> bean) {
+    public void loginDone(BaseBean<User> bean) {
         ToastUtil.showToastLong(this, "恭喜您，登录成功");
 //        EventBus.getDefault().post(new EventClose("main"));
 
@@ -527,13 +528,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void requestStart() {
-        LogU.t("start");
+        showLoading();
     }
 
     @Override
     public void requestEnd() {
-        LogU.t("end");
-
+        hideLoading();
     }
 
     @Override

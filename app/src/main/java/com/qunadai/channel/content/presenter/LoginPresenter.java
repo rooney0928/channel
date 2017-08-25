@@ -1,6 +1,6 @@
 package com.qunadai.channel.content.presenter;
 
-import com.qunadai.channel.bean.LoginBean;
+import com.qunadai.channel.bean.User;
 import com.qunadai.channel.bean.base.BaseBean;
 import com.qunadai.channel.content.contract.LoginContract;
 import com.qunadai.channel.content.model.LoginModelImpl;
@@ -27,7 +27,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             }
 
             @Override
-            public void loginDone(BaseBean<LoginBean> bean) {
+            public void loginDone(BaseBean<User> bean) {
                 view.loginDone(bean);
             }
 

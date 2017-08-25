@@ -4,7 +4,7 @@ package com.qunadai.channel.bean;
  * Created by wayne on 2017/8/22.
  */
 
-public class LoginBean {
+public class User {
 
 
     /**
@@ -41,15 +41,15 @@ public class LoginBean {
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private AuthoritiesBean authorities;
-    private int avatarUrl;
-    private int bank;
-    private int bankCardName;
-    private int bankCardNumber;
+    private String avatarUrl;
+    private String bank;
+    private String bankCardName;
+    private String bankCardNumber;
     private int commision;
-    private int companyName;
+    private String companyName;
     private long createdTime;
     private boolean credentialsNonExpired;
-    private int email;
+    private String email;
     private boolean enabled;
     private String id;
     private long lastLoginTime;
@@ -97,35 +97,35 @@ public class LoginBean {
         this.authorities = authorities;
     }
 
-    public int getAvatarUrl() {
+    public String getAvatarUrl() {
         return avatarUrl;
     }
 
-    public void setAvatarUrl(int avatarUrl) {
+    public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
 
-    public int getBank() {
+    public String getBank() {
         return bank;
     }
 
-    public void setBank(int bank) {
+    public void setBank(String bank) {
         this.bank = bank;
     }
 
-    public int getBankCardName() {
+    public String getBankCardName() {
         return bankCardName;
     }
 
-    public void setBankCardName(int bankCardName) {
+    public void setBankCardName(String bankCardName) {
         this.bankCardName = bankCardName;
     }
 
-    public int getBankCardNumber() {
+    public String getBankCardNumber() {
         return bankCardNumber;
     }
 
-    public void setBankCardNumber(int bankCardNumber) {
+    public void setBankCardNumber(String bankCardNumber) {
         this.bankCardNumber = bankCardNumber;
     }
 
@@ -137,11 +137,11 @@ public class LoginBean {
         this.commision = commision;
     }
 
-    public int getCompanyName() {
+    public String getCompanyName() {
         return companyName;
     }
 
-    public void setCompanyName(int companyName) {
+    public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
@@ -161,11 +161,11 @@ public class LoginBean {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
-    public int getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(int email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

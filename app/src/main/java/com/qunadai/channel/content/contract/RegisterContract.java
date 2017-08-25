@@ -11,24 +11,21 @@ import com.qunadai.channel.content.base.BaseView;
  * Created by wayne on 2017/5/5.
  */
 
-public interface LoginContract {
+public interface RegisterContract {
     interface View extends BaseView {
-//        void getLoginSms(String msg);
-//        void getLoginSmsFail(String error);
-
-        void loginDone(BaseBean<User> bean);
-        void loginFail(String error);
+        void getSignUpSms(BaseBean<User> bean);
+        void getSignUpSmsFail(String error);
+        void registerDone(BaseBean<User> bean);
+        void registerFail(String error);
     }
 
     interface Presenter extends BasePresenter {
-//        void requestLoginSms(String phone);
-        void loginByPwd(String auth);
-//        void loginBySms(String phone, String sms);
+        void requestSignUpSms(String phone);
+        void register(String phone, String sms, String pwd);
     }
 
     interface Model extends BaseModel {
-//        void requestLoginSms(String phone);
-        void loginByPwd(String auth);
-//        void loginBySms(String phone, String sms);
+        void requestSignUpSms(String phone);
+        void register(String phone, String sms, String pwd);
     }
 }

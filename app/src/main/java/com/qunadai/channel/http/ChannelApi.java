@@ -1,13 +1,14 @@
 package com.qunadai.channel.http;
 
 
-import com.qunadai.channel.bean.LoginBean;
+import com.qunadai.channel.bean.User;
 import com.qunadai.channel.bean.base.BaseBean;
 
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -17,7 +18,16 @@ import rx.Observable;
 public interface ChannelApi {
 
     @GET("home/users/signin")
-    Observable<BaseBean<LoginBean>> login(@Header("Authorization") String auth);
+    Observable<BaseBean<User>> login(@Header("Authorization") String auth);
+
+
+    @POST("home/users/signup/smscode")
+    Observable<BaseBean<User>> signUpSms(@Query("mobileNumber") String phone);
+
+    @PUT(" home/users/signup/register")
+    Observable<BaseBean<User>> signUp(@Query("mobileNumber") String phone,@Query("inputCode") String inputCode,
+                                      @Query("password") String password);
+
 
     /**
      * 获取登录短信验证码

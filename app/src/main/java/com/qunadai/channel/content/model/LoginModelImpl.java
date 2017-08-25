@@ -1,6 +1,6 @@
 package com.qunadai.channel.content.model;
 
-import com.qunadai.channel.bean.LoginBean;
+import com.qunadai.channel.bean.User;
 import com.qunadai.channel.bean.base.BaseBean;
 import com.qunadai.channel.content.contract.LoginContract;
 import com.qunadai.channel.http.ApiException;
@@ -29,7 +29,7 @@ public class LoginModelImpl implements LoginContract.Model{
 
         void getLoginSmsFail(String error);
 
-        void loginDone(BaseBean<LoginBean> bean);
+        void loginDone(BaseBean<User> bean);
 
         void loginFail(String error);
 
@@ -40,10 +40,10 @@ public class LoginModelImpl implements LoginContract.Model{
 
     @Override
     public void loginByPwd(String auth) {
-        Observable<BaseBean<LoginBean>> request = RxHttp.getInstance().login(auth);
+        Observable<BaseBean<User>> request = RxHttp.getInstance().login(auth);
         Subscription sub = request.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<BaseBean<LoginBean>>() {
+                .subscribe(new RxSubscriber<BaseBean<User>>() {
                     @Override
                     public void onStart() {
                         onReturnDataListener.requestStart();
@@ -56,7 +56,7 @@ public class LoginModelImpl implements LoginContract.Model{
                     }
 
                     @Override
-                    protected void onOk(BaseBean<LoginBean> token) {
+                    protected void onOk(BaseBean<User> token) {
                         onReturnDataListener.loginDone(token);
 
                     }
