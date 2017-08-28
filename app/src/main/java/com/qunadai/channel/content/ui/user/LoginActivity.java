@@ -25,6 +25,7 @@ import com.qunadai.channel.bean.base.BaseBean;
 import com.qunadai.channel.content.base.BaseActivity;
 import com.qunadai.channel.content.contract.LoginContract;
 import com.qunadai.channel.content.presenter.LoginPresenter;
+import com.qunadai.channel.content.ui.MainActivity;
 import com.qunadai.channel.utils.CodeUtil;
 import com.qunadai.channel.utils.CommUtil;
 import com.qunadai.channel.utils.LogU;
@@ -508,12 +509,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                             @Override
                             public void run() {
 
-//                                Intent intentMain = new Intent(LoginActivity.this, MainActivity.class);
-//                                startActivity(intentMain);
-//                                finish();
+                                Intent intentMain = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intentMain);
+                                finish();
 
 //                                EventBus.getDefault().post(new EventLogin());
-//                                finish();
+                                finish();
                             }
                         });
                     }
