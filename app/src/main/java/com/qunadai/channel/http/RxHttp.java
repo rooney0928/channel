@@ -83,6 +83,16 @@ public class RxHttp {
         return qndApi.signUp(phone, sms, pwd);
     }
 
+    //忘记短信
+    public static Observable<BaseBean<User>> forgetSms(String phone) {
+        return qndApi.forgetSms(phone);
+    }
+
+    //忘记密码
+    public static Observable<BaseBean<User>> forget(String phone, String sms, String pwd) {
+        return qndApi.forget(phone, sms, pwd);
+    }
+
 
     //用户部分
     //登录短信

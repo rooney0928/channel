@@ -23,6 +23,7 @@
         </activity>
 
         <activity android:name=".content.ui.user.RegisterActivity"></activity>
+        <activity android:name=".content.ui.user.ForgetPwdActivity"></activity>
     </application>
 
 </manifest>

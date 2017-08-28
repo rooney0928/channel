@@ -1,0 +1,342 @@
+package com.qunadai.channel.content.ui.user;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+
+
+import com.qunadai.channel.R;
+import com.qunadai.channel.bean.User;
+import com.qunadai.channel.bean.base.BaseBean;
+import com.qunadai.channel.content.base.BaseNetActivity;
+import com.qunadai.channel.content.contract.ForgetContract;
+import com.qunadai.channel.content.presenter.ForgetPresenter;
+import com.qunadai.channel.utils.CodeUtil;
+import com.qunadai.channel.utils.CommUtil;
+import com.qunadai.channel.utils.NetworkUtil;
+import com.qunadai.channel.utils.ToastUtil;
+
+import butterknife.BindView;
+
+/**
+ * Created by wayne on 2017/5/11.
+ */
+
+public class ForgetPwdActivity extends BaseNetActivity implements ForgetContract.View{
+    private ForgetPresenter forgetPresenter;
+
+    @BindView(R.id.et_forget_phone)
+    EditText et_forget_phone;
+    @BindView(R.id.et_forget_sms)
+    EditText et_forget_sms;
+    @BindView(R.id.et_forget_pwd)
+    EditText et_forget_pwd;
+
+
+    @BindView(R.id.iv_forget_phone_clear)
+    ImageView iv_forget_phone_clear;
+    @BindView(R.id.iv_forget_pwd_clear)
+    ImageView iv_forget_pwd_clear;
+
+    @BindView(R.id.bt_get_sms)
+    Button bt_get_sms;
+    @BindView(R.id.bt_reset)
+    Button bt_reset;
+
+
+    @BindView(R.id.iv_get_code)
+    ImageView iv_get_code;
+    @BindView(R.id.et_forget_sms_pic)
+    EditText et_forget_sms_pic;
+
+    boolean isRequest;
+    private TimeCount time;
+
+
+    @Override
+    protected void updateTopViewHideAndShow() {
+//        setTitleBarStatus(TITLE_ON_BACK_ON);
+        setTitleText("重置密码");
+    }
+
+    @Override
+    protected View createCenterView() {
+        View view = View.inflate(this, R.layout.activity_forget,null);
+        return view;
+    }
+
+    @Override
+    protected View createBottomView() {
+        return null;
+    }
+
+    @Override
+    protected void initView() {
+        forgetPresenter = new ForgetPresenter(this);
+        time = new TimeCount(60000, 1000);
+
+    }
+
+    View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            iv_forget_phone_clear.setVisibility(View.GONE);
+            iv_forget_pwd_clear.setVisibility(View.GONE);
+
+            switch (v.getId()) {
+                case R.id.et_forget_phone:
+                    if (et_forget_phone.getText().toString().trim().length() != 0) {
+                        iv_forget_phone_clear.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                case R.id.et_forget_pwd:
+                    if (et_forget_pwd.getText().toString().trim().length() != 0) {
+                        iv_forget_pwd_clear.setVisibility(View.VISIBLE);
+                    }
+                    break;
+            }
+        }
+    };
+
+
+    @Override
+    public void initViewData() {
+        bt_get_sms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                String code = CodeUtil.getInstance().getCode();
+                String inputCode = CommUtil.getText(et_forget_sms_pic);
+                if (!code.equalsIgnoreCase(inputCode)) {
+                    ToastUtil.showToast(ForgetPwdActivity.this, "请填写正确的图形验证码");
+                    return;
+                }
+
+
+                if (isRequest) {
+                    ToastUtil.showToast(ForgetPwdActivity.this, "请稍后");
+                    return;
+                }
+                isRequest = true;
+                String phone = et_forget_phone.getText().toString().trim();
+                if (phone.length() == 0) {
+                    isRequest = false;
+                    ToastUtil.showToast(ForgetPwdActivity.this, "请填写正确的手机号");
+                    return;
+                }
+                //请求发送短信
+                if(NetworkUtil.checkNetwork(ForgetPwdActivity.this)){
+
+                    forgetPresenter.requestForgetSms(phone);
+                }
+
+            }
+
+        });
+        et_forget_phone.setOnFocusChangeListener(onFocusChangeListener);
+        et_forget_pwd.setOnFocusChangeListener(onFocusChangeListener);
+        et_forget_phone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(et_forget_phone.getText().toString().trim().length()==0){
+                    iv_forget_phone_clear.setVisibility(View.GONE);
+                }else{
+                    iv_forget_phone_clear.setVisibility(View.VISIBLE);
+                }
+                updateBtStatus();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        et_forget_sms.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                updateBtStatus();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        et_forget_pwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et_forget_pwd.getText().toString().trim().length() == 0) {
+                    iv_forget_pwd_clear.setVisibility(View.GONE);
+                }else{
+                    iv_forget_pwd_clear.setVisibility(View.VISIBLE);
+                }
+
+                updateBtStatus();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        iv_forget_phone_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_forget_phone.setText("");
+            }
+        });
+        iv_forget_pwd_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_forget_pwd.setText("");
+            }
+        });
+
+        bt_reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetworkUtil.checkNetwork(ForgetPwdActivity.this)) {
+                    String phone = et_forget_phone.getText().toString().trim();
+                    String sms = et_forget_sms.getText().toString().trim();
+                    String pwd = et_forget_pwd.getText().toString().trim();
+//                    LogU.t("pwd?"+CommUtil.shaEncrypt(pwd));
+                    if (phone.length() == 0 || sms.length() == 0 || pwd.length() == 0) {
+                        ToastUtil.showToast(ForgetPwdActivity.this,"信息未写全");
+                    }
+
+                    if(NetworkUtil.checkNetwork(ForgetPwdActivity.this)){
+                        forgetPresenter.reset(phone,sms, pwd);
+                    }
+
+                }
+
+            }
+        });
+
+        setPicCode();
+        iv_get_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setPicCode();
+            }
+        });
+
+    }
+
+    public void setPicCode() {
+        Bitmap b = CodeUtil.getInstance().createBitmap();
+        iv_get_code.setImageBitmap(b);
+    }
+
+    private void updateBtStatus(){
+        String phone = et_forget_phone.getText().toString().trim();
+        String sms = et_forget_sms.getText().toString().trim();
+        String pwd = et_forget_pwd.getText().toString().trim();
+
+        if (phone.length() == 0 || sms.length() == 0 || pwd.length() == 0) {
+            bt_reset.setEnabled(false);
+        } else {
+            bt_reset.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void getForgetSms(BaseBean<User> msg) {
+        ToastUtil.showToastLong(this,msg.getDetail());
+        if (time != null) {
+            time.start();
+        }
+        bt_get_sms.setEnabled(false);
+    }
+
+    @Override
+    public void getForgetSmsFail(String error) {
+        ToastUtil.showToastLong(this,error);
+
+    }
+
+    @Override
+    public void resetDone(BaseBean<User> bean) {
+        ToastUtil.showToastLong(this,bean.getDetail());
+        enterLogin();
+    }
+
+    @Override
+    public void resetFail(String error) {
+        ToastUtil.showToast(this,error);
+    }
+
+
+    @Override
+    public void requestStart() {
+//        ProgressBarUtil.showLoadDialog(this);
+        showLoading();
+    }
+
+    @Override
+    public void requestEnd() {
+        isRequest = false;
+//        ProgressBarUtil.hideLoadDialogDelay(this);
+        hideLoading();
+    }
+
+    @Override
+    public void tokenFail() {
+
+    }
+
+    public void enterLogin(){
+        Intent intentLogin = new Intent(this,LoginActivity.class);
+        startActivity(intentLogin);
+        finish();
+    }
+
+    /* 定义一个倒计时的内部类 */
+    class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            // 计时过程显示
+            if (bt_get_sms != null) {
+                bt_get_sms.setText(millisUntilFinished / 1000 + "s");
+            }
+        }
+
+        @Override
+        public void onFinish() {
+            // 计时完毕时触发
+            if (bt_get_sms != null) {
+                bt_get_sms.setText("获取验证码");
+                bt_get_sms.setEnabled(true);
+            }
+        }
+    }
+}

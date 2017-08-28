@@ -24,11 +24,16 @@ public interface ChannelApi {
     @POST("home/users/signup/smscode")
     Observable<BaseBean<User>> signUpSms(@Query("mobileNumber") String phone);
 
-    @PUT(" home/users/signup/register")
+    @PUT("home/users/signup/register")
     Observable<BaseBean<User>> signUp(@Query("mobileNumber") String phone,@Query("inputCode") String inputCode,
                                       @Query("password") String password);
 
+    @POST("home/users/reset/smscode")
+    Observable<BaseBean<User>> forgetSms(@Query("mobileNumber") String phone);
 
+    @PUT("home/users/reset/password")
+    Observable<BaseBean<User>> forget(@Query("mobileNumber") String phone,@Query("inputCode") String inputCode,
+                                      @Query("password") String password);
     /**
      * 获取登录短信验证码
      *

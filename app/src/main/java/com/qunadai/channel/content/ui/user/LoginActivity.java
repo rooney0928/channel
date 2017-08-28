@@ -319,8 +319,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             @Override
             public void onClick(View v) {
                 //进入忘记密码环节
-//                Intent intentForget = new Intent(LoginActivity.this, ForgetPwdActivity.class);
-//                startActivity(intentForget);
+                Intent intentForget = new Intent(LoginActivity.this, ForgetPwdActivity.class);
+                startActivity(intentForget);
             }
         });
         bt_login.setOnClickListener(new View.OnClickListener() {
