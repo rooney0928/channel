@@ -1,6 +1,7 @@
 package com.qunadai.channel.http;
 
 
+import com.qunadai.channel.bean.LoanList;
 import com.qunadai.channel.bean.User;
 import com.qunadai.channel.bean.base.BaseBean;
 
@@ -34,6 +35,9 @@ public interface ChannelApi {
     @PUT("home/users/reset/password")
     Observable<BaseBean<User>> forget(@Query("mobileNumber") String phone,@Query("inputCode") String inputCode,
                                       @Query("password") String password);
+
+    @GET("product/getByUserCondition")
+    Observable<BaseBean<LoanList>> recommend(@Header("Authorization") String auth);
     /**
      * 获取登录短信验证码
      *
